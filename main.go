@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/mrpiggy97/grpcExample/interceptors"
 	"github.com/mrpiggy97/sharedProtofiles/calculation"
 	"github.com/mrpiggy97/sharedProtofiles/formatting"
 	"github.com/mrpiggy97/sharedProtofiles/num"
@@ -19,7 +20,11 @@ func main() {
 		panic(err)
 	}
 	var userServer *user.Server = new(user.Server)
-	var grpcServer *grpc.Server = grpc.NewServer()
+	var grpcServer *grpc.Server = grpc.NewServer(
+		interceptors.WithAuthInterceptor(),
+		interceptors.WithGeneralInterceptor(),
+		interceptors.WithLoggerInterceptor(),
+	)
 	user.RegisterUserServiceServer(grpcServer, userServer)
 
 	var numServer *num.Server = new(num.Server)

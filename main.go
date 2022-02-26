@@ -21,9 +21,7 @@ func main() {
 	}
 	var userServer *user.Server = new(user.Server)
 	var grpcServer *grpc.Server = grpc.NewServer(
-		interceptors.WithAuthInterceptor(),
-		interceptors.WithGeneralInterceptor(),
-		interceptors.WithLoggerInterceptor(),
+		interceptors.WithMessageInterceptor(),
 	)
 	user.RegisterUserServiceServer(grpcServer, userServer)
 

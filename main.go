@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 
 	"github.com/mrpiggy97/grpcExample/interceptors"
 	"github.com/mrpiggy97/sharedProtofiles/calculation"
@@ -15,7 +16,12 @@ import (
 )
 
 func main() {
-	listener, err := net.Listen("tcp", "0.0.0.0:50051")
+	var port string = os.Getenv("PORT")
+	if len(port) == 0 {
+		panic("port cannot be blank")
+	}
+	var address string = fmt.Sprintf("0.0.0.0:%v", port)
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		panic(err)
 	}

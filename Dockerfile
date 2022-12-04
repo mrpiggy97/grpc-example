@@ -1,6 +1,6 @@
 FROM golang:alpine
-WORKDIR /grcp-server
-COPY . /grpc-server
+WORKDIR /app
+COPY . /app
 RUN go mod tidy
 RUN go build main.go
 CMD ["./main"]
